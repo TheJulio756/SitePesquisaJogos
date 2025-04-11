@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Informações sobre o Nome</title>
+</head>
+<body>
+  <h1>Descubra informações sobre seu nome!</h1>
+
+  <label for="nome">Digite seu nome:</label>
+  <input type="text" id="nome"><br><br>
+  <button onclick="buscarInformacoes()">Buscar Informações</button>
+
+  <div id="resultado" style="margin-top: 20px;"></div>
+
+  <script>
+    async function buscarInformacoes() {
+      const nome = document.getElementById("nome").value;
+      const resultadoDiv = document.getElementById("resultado");
+      resultadoDiv.innerHTML = "Carregando...";
+
+      try {
+        const [idadeData, generoData, paisData] = await Promise.all([
+          fetch(`https://api.agify.io/?name=${nome}`).then(response => response.json()),
+          fetch(`https://api.genderize.io/?name=${nome}`).then(response => response.json()),
+          fetch(`https://api.nationalize.io/?name=${nome}`).then(response => response.json())
+        ]);
+
+        let resultadoHTML = `<h2>Resultados para o nome: ${nome}</h2>`;
+
+        if (idadeData && idadeData.age !== undefined) {
+          resultadoHTML += `<p>Idade estimada (Agify): ${idadeData.age}</p>`;
+        } else {
+          resultadoHTML += `<p>Não foi possível estimar a idade.</p>`;
+        }
+
+        if (generoData && generoData.gender) {
+          const probabilidadeGenero = (generoData.probability * 100).toFixed(2);
+          resultadoHTML += `<p>Gênero provável (Genderize): ${generoData.gender} (${probabilidadeGenero}%)</p>`;
+        } else {
+          resultadoHTML += `<p>Não foi possível determinar o gênero.</p>`;
+        }
+
+        if (paisData && paisData.country && paisData.country.length > 0) {
+          resultadoHTML += "<p>Países prováveis (Nationalize):</p><ul>";
+          paisData.country.forEach(pais => {
+            const probabilidadePais = (pais.probability * 100).toFixed(2);
+            resultadoHTML += `<li>${getPaisPorCodigo(pais.country_id)} (${probabilidadePais}%)</li>`;
+          });
+          resultadoHTML += "</ul>";
+        } else {
+          resultadoHTML += `<p>Não foi possível determinar os países prováveis.</p>`;
+        }
+
+        resultadoDiv.innerHTML = resultadoHTML;
+
+      } catch (error) {
+        console.error("Erro ao buscar informações:", error);
+        resultadoDiv.innerHTML = "<p>Ocorreu um erro ao buscar as informações.</p>";
+      }
+    }
+
+    function getPaisPorCodigo(codigo) {
+      // Objeto com alguns códigos de países e seus nomes (pode ser expandido)
+      const paises = {
+        "BR": "Brasil",
+        "US": "Estados Unidos",
+        "CA": "Canadá",
+        "GB": "Reino Unido",
+        "JP": "Japão",
+        "DE": "Alemanha",
+        "FR": "França",
+        "IT": "Itália",
+        "ES": "Espanha",
+        "PT": "Portugal",
+        // Adicione mais códigos de países conforme necessário
+      };
+      return paises[codigo] || codigo; // Retorna o nome ou o próprio código se não encontrado
+    }
+  </script>
+</body>
+</html>
