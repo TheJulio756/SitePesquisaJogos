@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorando o Mundo dos Jogos</title>
+
+    <style> 
+
+        /*    body {
+    font-family: sans-serif;
+    margin: 20px;
+}
+
+#busca-jogos, #filtros {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#filtros label, #filtros select {
+    margin-right: 15px;
+}
+
+#jogos-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.card-jogo {
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 15px;
+    text-align: center;
+}
+
+.card-jogo img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.card-jogo h3 {
+    margin-top: 0;
+}
+
+.card-jogo button {
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#detalhes-jogo {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#info-jogo p {
+    margin-bottom: 10px;
+} */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #181818;
+    color: #f0f0f0;
+    line-height: 1.6;
+}
+
+h1, h2, h3 {
+    color: #eee;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+#busca-jogos, #filtros {
+    background-color: #222;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+    max-width: 90%;
+}
+
+#busca-jogos label, #filtros label {
+    display: block;
+    margin-bottom: 5px;
+    color: #ccc;
+}
+
+#busca-jogos input[type="text"], #filtros select {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #333;
+    color: #f0f0f0;
+    width: calc(100% - 22px);
+    box-sizing: border-box;
+}
+
+#busca-jogos button {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+#busca-jogos button:hover {
+    background-color: #0056b3;
+}
+
+#filtros h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+#filtros label, #filtros select {
+    margin-right: 15px;
+}
+
+#jogos-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    padding: 20px;
+    max-width: 95%;
+    margin: 20px auto;
+}
+
+.card-jogo {
+    background-color: #282828;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+    transition: transform 0.2s ease-in-out;
+}
+
+.card-jogo:hover {
+    transform: scale(1.02);
+}
+
+.card-jogo img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.card-jogo h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #eee;
+}
+
+.card-jogo button {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+.card-jogo button:hover {
+    background-color: #45a049;
+}
+
+#detalhes-jogo {
+    background-color: #222;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+    max-width: 80%;
+}
+
+#detalhes-jogo h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+#info-jogo p {
+    margin-bottom: 15px;
+    color: #ccc;
+}
+
+#info-jogo strong {
+    color: #eee;
+}
+
+#info-jogo a {
+    color: #00bfff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+#info-jogo a:hover {
+    color: #0080ff;
+    text-decoration: underline;
+}
+
+#detalhes-jogo button {
+    padding: 10px 15px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#detalhes-jogo button:hover {
+    background-color: #5a6268;
+}
+
+#mensagem-erro {
+    color: #ff4d4d;
+    margin-top: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+    </style>
+</head>
+<body>
+    <h1>Explore o Universo dos Jogos</h1>
+
+    <div id="busca-jogos">
+        <label for="termo-busca">Buscar Jogo:</label>
+        <input type="text" id="termo-busca">
+        <button id="buscar-jogos-btn">Buscar</button>
+    </div>
+
+    <div id="filtros">
+        <h2>Filtrar jogos por:</h2>
+        <label for="genero-filtro">Gênero:</label>
+        <select id="genero-filtro">
+            <option value="">Todos</option>
+        </select>
+
+        <label for="plataforma-filtro">Plataforma:</label>
+        <select id="plataforma-filtro">
+            <option value="">Todas</option>
+        </select>
+    </div>
+
+    <div id="lista-jogos">
+        <h2>Resultados da Busca</h2>
+        <div id="jogos-container">
+            </div>
+    </div>
+
+    <div id="detalhes-jogo" style="display: none;">
+        <h2>Detalhes do Jogo</h2>
+        <div id="info-jogo">
+            </div>
+        <button id="voltar-lista">Voltar para a Lista</button>
+    </div>
+
+    <div id="mensagem-erro" style="color: red;">
+        </div>
+
+    <script>
+        const baseUrl = 'https://api.rawg.io/api/';
+const apiKey = '57285296a32e406895e26898345d5711'; // Minha API :)
+const buscarJogosBtn = document.getElementById('buscar-jogos-btn');
+const termoBuscaInput = document.getElementById('termo-busca');
+const listaJogosDiv = document.getElementById('jogos-container');
+const detalhesJogoDiv = document.getElementById('detalhes-jogo');
+const infoJogoDiv = document.getElementById('info-jogo');
+const voltarListaBtn = document.getElementById('voltar-lista');
+const mensagemErroDiv = document.getElementById('mensagem-erro');
+const generoFiltro = document.getElementById('genero-filtro');
+const plataformaFiltro = document.getElementById('plataforma-filtro');
+
+let jogosExibidos = [];
+let generosDisponiveis = [];
+let plataformasDisponiveis = [];
+
+async function buscarJogos(termo = '', generos = '', plataformas = '') {
+    try {
+        let url = `${baseUrl}games?page_size=20`;
+        if (termo) {
+            url += `&search=${termo}`;
+        }
+        if (generos) {
+            url += `&genres=${generos}`;
+        }
+        if (plataformas) {
+            url += `&platforms=${plataformas}`;
+        }
+        if (apiKey) {
+            url += `&key=${apiKey}`;
+        }
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (response.ok) {
+            jogosExibidos = data.results;
+            exibirListaDeJogos(jogosExibidos);
+        } else {
+            exibirMensagemErro(`Erro ao buscar jogos: ${data.error}`);
+        }
+    } catch (error) {
+        exibirMensagemErro(`Erro na requisição: ${error.message}`);
+    }
+}
+
+async function buscarDetalhesJogo(id) {
+    try {
+        const url = `${baseUrl}games/${id}?key=${apiKey}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (response.ok) {
+            exibirDetalhesDoJogo(data);
+        } else {
+            exibirMensagemErro(`Erro ao buscar detalhes do jogo: ${data.error}`);
+        }
+    } catch (error) {
+        exibirMensagemErro(`Erro na requisição dos detalhes: ${error.message}`);
+    }
+}
+
+async function buscarGeneros() {
+    try {
+        const url = `${baseUrl}genres?key=${apiKey}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (response.ok) {
+            generosDisponiveis = data.results;
+            popularFiltroGeneros(generosDisponiveis);
+        } else {
+            console.error("Erro ao buscar gêneros:", data.error);
+        }
+    } catch (error) {
+        console.error("Erro na requisição de gêneros:", error.message);
+    }
+}
+
+async function buscarPlataformas() {
+    try {
+        const url = `${baseUrl}platforms?key=${apiKey}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (response.ok) {
+            plataformasDisponiveis = data.results;
+            popularFiltroPlataformas(plataformasDisponiveis);
+        } else {
+            console.error("Erro ao buscar plataformas:", data.error);
+        }
+    } catch (error) {
+        console.error("Erro na requisição de plataformas:", error.message);
+    }
+}
+
+
+function exibirListaDeJogos(jogos) {
+    listaJogosDiv.innerHTML = '';
+    jogos.forEach(jogo => {
+        const card = document.createElement('div');
+        card.classList.add('card-jogo');
+        card.innerHTML = `
+            <h3>${jogo.name}</h3>
+            ${jogo.background_image ? `<img src="${jogo.background_image}" alt="${jogo.name}">` : '<p>Imagem não disponível</p>'}
+            <button data-id="${jogo.id}">Ver Detalhes</button>
+        `;
+        listaJogosDiv.appendChild(card);
+    });
+
+   
+    document.querySelectorAll('.card-jogo button').forEach(button => {
+        button.addEventListener('click', function() {
+            const jogoId = this.dataset.id;
+            listaJogosDiv.style.display = 'none';
+            detalhesJogoDiv.style.display = 'block';
+            buscarDetalhesJogo(jogoId);
+        });
+    });
+}
+
+function exibirDetalhesDoJogo(jogo) {
+    infoJogoDiv.innerHTML = `
+        <h3>${jogo.name_original}</h3>
+        ${jogo.background_image ? `<img src="${jogo.background_image}" alt="${jogo.name_original}" style="max-width: 50%;">` : '<p>Imagem não disponível</p>'}
+        <p><strong>Descrição:</strong> ${jogo.description_raw || 'Descrição não disponível.'}</p>
+        <p><strong>Lançamento:</strong> ${jogo.released || 'Não informado'}</p>
+        <p><strong>Gêneros:</strong> ${jogo.genres.map(g => g.name).join(', ') || 'Não informado'}</p>
+        <p><strong>Plataformas:</strong> ${jogo.platforms.map(p => p.platform.name).join(', ') || 'Não informado'}</p>
+        ${jogo.website ? `<p><strong>Website:</strong> <a href="${jogo.website}" target="_blank">${jogo.website}</a></p>` : ''}
+    `;
+}
+
+function exibirMensagemErro(mensagem) {
+    mensagemErroDiv.textContent = mensagem;
+}
+
+function popularFiltroGeneros(generos) {
+    generos.forEach(genero => {
+        const option = document.createElement('option');
+        option.value = genero.slug;
+        option.textContent = genero.name;
+        generoFiltro.appendChild(option);
+    });
+}
+
+function popularFiltroPlataformas(plataformas) {
+    plataformas.forEach(plataforma => {
+        const option = document.createElement('option');
+        option.value = plataforma.slug;
+        option.textContent = plataforma.name;
+        plataformaFiltro.appendChild(option);
+    });
+}
+
+
+termoBuscaInput.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        buscarJogosBtn.click(); 
+    }
+});
+
+buscarJogosBtn.addEventListener('click', () => {
+    const termo = termoBuscaInput.value.trim();
+    const generoSelecionado = generoFiltro.value;
+    const plataformaSelecionada = plataformaFiltro.value;
+    buscarJogos(termo, generoSelecionado, plataformaSelecionada);
+});
+
+voltarListaBtn.addEventListener('click', () => {
+    detalhesJogoDiv.style.display = 'none';
+    listaJogosDiv.style.display = 'grid';
+});
+
+generoFiltro.addEventListener('change', () => {
+    const termo = termoBuscaInput.value.trim();
+    const generoSelecionado = generoFiltro.value;
+    const plataformaSelecionada = plataformaFiltro.value;
+    buscarJogos(termo, generoSelecionado, plataformaSelecionada);
+});
+
+plataformaFiltro.addEventListener('change', () => {
+    const termo = termoBuscaInput.value.trim();
+    const generoSelecionado = generoFiltro.value;
+    const plataformaSelecionada = plataformaFiltro.value;
+    buscarJogos(termo, generoSelecionado, plataformaSelecionada);
+});
+
+
+buscarGeneros();
+buscarPlataformas();
+buscarJogos();
+    </script>
+</body>
+</html>
